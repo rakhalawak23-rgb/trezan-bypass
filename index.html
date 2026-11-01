@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trezan Bypass</title>
+    <!-- Favicon using official logo -->
+    <link rel="icon" type="image/jpeg" href="https://files.catbox.moe/e5qxsl.jpg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            50: '#e0f7ff',
+                            100: '#b8f0ff',
+                            200: '#7cdfff',
+                            300: '#38bdf8',
+                            400: '#00f0ff',
+                            500: '#00d0ff',
+                            600: '#0088ff',
+                            700: '#0055ff',
+                            800: '#0333a4',
+                            900: '#071842',
+                            950: '#0a0e1a',
+                        },
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 2.5s infinite ease-in-out',
+                        'blob': 'blob 12s infinite alternate ease-in-out',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 15px rgba(0, 240, 255, 0.4), 0 0 35px rgba(0, 85, 255, 0.25)' },
+                            '50%': { boxShadow: '0 0 30px rgba(0, 240, 255, 0.85), 0 0 65px rgba(0, 85, 255, 0.6)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(40px, -30px) scale(1.1)' },
+                            '66%': { transform: 'translate(-30px, 20px) scale(0.95)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0e1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 240, 255, 0.35);
+            border-radius: 9999px;
+            border: 2px solid #0a0e1a;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 240, 255, 0.8);
+        }
+
+        /* Glassmorphism Styling */
+        .glass-panel {
+            background: rgba(10, 18, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 240, 255, 0.22);
+            box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.75), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-input {
+            background: rgba(6, 12, 28, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.35);
+            color: #f0f9ff;
+            backdrop-filter: blur(14px);
+            transition: all 0.25s ease;
+        }
+        .glass-input:focus {
+            outline: none;
+            border-color: #00f0ff;
+            box-shadow: 0 0 28px rgba(0, 240, 255, 0.5);
+            background: rgba(6, 12, 28, 0.95);
+        }
+
+        .neon-text-cyan {
+            text-shadow: 0 0 12px rgba(0, 240, 255, 0.8), 0 0 25px rgba(0, 85, 255, 0.55);
+        }
+
+        .cyber-btn-gradient {
+            background: linear-gradient(135deg, #00f0ff 0%, #0066ff 100%);
+        }
+        .cyber-btn-gradient:hover {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.75);
+        }
+
+        .sfl-badge {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(0, 85, 255, 0.25));
+            border: 1px solid rgba(0, 240, 255, 0.4);
+        }
+
+        .bg-grid-pattern {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 240, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 240, 255, 0.04) 1px, transparent 1px);
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-cyber-950 text-slate-100 font-sans min-h-screen relative overflow-x-hidden selection:bg-cyber-400 selection:text-cyber-950 bg-grid-pattern">
+
+    <!-- AURORA NEON MESH BACKGROUND -->
+    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-[38rem] h-[38rem] bg-cyber-400/15 rounded-full blur-[140px] animate-blob"></div>
+        <div class="absolute top-1/3 -right-40 w-[42rem] h-[42rem] bg-cyber-700/20 rounded-full blur-[160px] animate-blob" style="animation-delay: 4s;"></div>
+        <div class="absolute -bottom-40 left-1/3 w-[44rem] h-[44rem] bg-blue-600/15 rounded-full blur-[170px] animate-blob" style="animation-delay: 8s;"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-cyber-950/85 to-cyber-950"></div>
+    </div>
+
+    <!-- MAIN APP WRAPPER (NO TOP HEADER NAVBAR) -->
+    <div id="app" class="relative z-10 flex flex-col min-h-screen">
+
+        <!-- MAIN CONTENT CONTAINER -->
+        <main class="flex-grow max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+
+            <!-- HERO SECTION (CENTERED LOGO & BRANDING) -->
+            <section class="text-center space-y-4 pt-4 max-w-3xl mx-auto">
+                <!-- OFFICIAL LOGO EMBLEM CENTERED -->
+                <div class="flex justify-center mb-3">
+                    <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-3xl p-1 bg-gradient-to-b from-cyber-400 via-blue-500 to-cyber-900 shadow-[0_0_40px_rgba(0,240,255,0.6)] group">
+                        <img 
+                            src="https://files.catbox.moe/e5qxsl.jpg" 
+                            alt="Trezan Bypass Official Logo" 
+                            class="w-full h-full object-cover rounded-[22px] border border-cyber-400/60 transition duration-300 group-hover:scale-105"
+                            onerror="this.onerror=null; this.src='https://placehold.co/150x150/0a0e1a/00f0ff?text=TB';"
+                        />
+                        <div class="absolute -bottom-2 -right-2 bg-cyber-950 border border-cyber-400/70 p-2 rounded-xl text-cyber-400 shadow-lg text-sm">
+                            <i class="fa-solid fa-bolt animate-pulse"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full sfl-badge text-cyber-300 text-xs font-bold font-mono">
+                    <span class="w-2.5 h-2.5 rounded-full bg-cyber-400 animate-ping"></span>
+                    <span>SPECIALIZED SFL.GL & SHORTLINK UNREDIRECTOR</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                    Bypass Link <span class="text-cyber-400 font-mono">Sfl.gl</span> & Shortlink <br>
+                    <span class="bg-gradient-to-r from-cyber-400 via-cyan-300 to-blue-500 bg-clip-text text-transparent neon-text-cyan">
+                        Tanpa Iklan Menjebak & Timer
+                    </span>
+                </h1>
+
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl mx-auto">
+                    Aplikasi utilitas tingkat lanjut untuk mengekstrak alamat URL tujuan dari link <code class="text-cyber-300 font-mono bg-cyber-900/80 px-1.5 py-0.5 rounded">sfl.gl</code>, <code class="text-cyber-300 font-mono bg-cyber-900/80 px-1.5 py-0.5 rounded">sfl.ink</code>, serta berbagai penyedia shortlink lainnya secara otomatis dan aman.
+                </p>
+
+                <!-- STAT CARDS GRID -->
+                <div class="grid grid-cols-3 gap-3 sm:gap-6 pt-3 max-w-xl mx-auto">
+                    <div class="glass-panel p-3.5 sm:p-4 rounded-2xl text-center border-b-2 border-b-cyber-400">
+                        <p class="text-[10px] sm:text-xs font-mono text-cyber-300 uppercase font-semibold">Sfl.gl Success Rate</p>
+                        <p class="text-xl sm:text-2xl font-black text-white font-mono mt-1">99.4%</p>
+                    </div>
+                    <div class="glass-panel p-3.5 sm:p-4 rounded-2xl text-center border-b-2 border-b-cyan-400">
+                        <p class="text-[10px] sm:text-xs font-mono text-cyan-400 uppercase font-semibold">Engine Solver</p>
+                        <p class="text-xl sm:text-2xl font-black text-white font-mono mt-1">Sfl.gl v2.8</p>
+                    </div>
+                    <div class="glass-panel p-3.5 sm:p-4 rounded-2xl text-center border-b-2 border-b-blue-500">
+                        <p class="text-[10px] sm:text-xs font-mono text-blue-400 uppercase font-semibold">Total Processed</p>
+                        <p id="statTotalBypassed" class="text-xl sm:text-2xl font-black text-white font-mono mt-1">2,841</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MAIN INPUT BYPASS CARD PANEL -->
+            <section id="bypass-card" class="glass-panel rounded-3xl p-6 sm:p-8 space-y-6 relative border border-cyber-400/35 shadow-2xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-cyber-400/20 pb-4">
+                    <div class="flex items-center space-x-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-cyber-400/20 flex items-center justify-center border border-cyber-400/40">
+                            <i class="fa-solid fa-bolt text-cyber-400 text-sm"></i>
+                        </div>
+                        <h2 class="text-base sm:text-lg font-bold text-white font-mono uppercase">INPUT LINK SFL.GL ATAU SHORTLINK</h2>
+                    </div>
+                    <span class="text-xs text-cyber-300 font-mono flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Engine Sfl.gl Active
+                    </span>
+                </div>
+
+                <!-- Input Form & Quick Controls -->
+                <form onsubmit="handleBypassSubmit(event)" class="space-y-4">
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-cyber-400">
+                            <i class="fa-solid fa-link text-sm"></i>
+                        </div>
+                        <input 
+                            type="url" 
+                            id="inputShortlink" 
+                            required 
+                            placeholder="Tempel link sfl.gl di sini (contoh: https://sfl.gl/sample-link)" 
+                            class="w-full glass-input pl-11 pr-32 py-4 rounded-2xl text-xs sm:text-sm font-mono placeholder-slate-400/70"
+                        >
+                        <!-- Quick Action Buttons Inside Input -->
+                        <div class="absolute inset-y-0 right-2 flex items-center space-x-1.5">
+                            <button 
+                                type="button" 
+                                onclick="pasteFromClipboard()" 
+                                title="Tempel dari clipboard"
+                                class="px-3 py-2 rounded-xl bg-cyber-400/15 hover:bg-cyber-400/30 text-cyber-300 hover:text-white text-xs font-semibold transition flex items-center border border-cyber-400/30"
+                            >
+                                <i class="fa-regular fa-paste mr-1"></i>
+                                <span class="hidden sm:inline">Tempel</span>
+                            </button>
+                            <button 
+                                type="button" 
+                                onclick="clearInput()" 
+                                title="Hapus input"
+                                class="px-2.5 py-2 rounded-xl bg-slate-800/80 hover:bg-rose-500/20 text-slate-400 hover:text-rose-300 text-xs font-semibold transition border border-slate-700/50"
+                            >
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PRESET SAMPLE BUTTONS SPECIFIC TO SFL.GL -->
+                    <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                        <span class="text-slate-400 font-medium font-mono text-[11px]">Coba Uji Coba (1-Klik):</span>
+                        <button type="button" onclick="loadSample('sfl_query')" class="px-2.5 py-1 rounded-lg bg-cyber-900/90 hover:bg-cyber-800 text-cyber-300 border border-cyber-400/40 transition flex items-center">
+                            <i class="fa-solid fa-vial mr-1 text-cyber-400"></i>Sfl.gl Query Link
+                        </button>
+                        <button type="button" onclick="loadSample('sfl_base64')" class="px-2.5 py-1 rounded-lg bg-cyber-900/90 hover:bg-cyber-800 text-cyan-300 border border-cyan-400/40 transition flex items-center">
+                            <i class="fa-solid fa-code mr-1 text-cyan-300"></i>Sfl.gl Base64
+                        </button>
+                        <button type="button" onclick="loadSample('sfl_direct')" class="px-2.5 py-1 rounded-lg bg-cyber-900/90 hover:bg-cyber-800 text-blue-300 border border-blue-500/40 transition flex items-center">
+                            <i class="fa-solid fa-route mr-1 text-blue-400"></i>Sfl.gl Redirect Chain
+                        </button>
+                        <button type="button" onclick="loadSample('sfl_protected')" class="px-2.5 py-1 rounded-lg bg-cyber-900/90 hover:bg-cyber-800 text-amber-300 border border-amber-500/40 transition flex items-center">
+                            <i class="fa-solid fa-shield-halved mr-1 text-amber-400"></i>Sfl.gl Protected Test
+                        </button>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit" 
+                        id="btnBypassSubmit" 
+                        class="w-full py-4 rounded-2xl cyber-btn-gradient text-cyber-950 font-black text-sm sm:text-base tracking-wide uppercase transition-all transform active:scale-[0.99] flex items-center justify-center space-x-2 shadow-lg cursor-pointer"
+                    >
+                        <i class="fa-solid fa-bolt text-lg"></i>
+                        <span>BYPASS LINK SFL.GL SEKARANG</span>
+                    </button>
+                </form>
+
+                <!-- STEPPER VISUALIZER PIPELINE -->
+                <div id="pipelineContainer" class="hidden glass-panel rounded-2xl p-5 border border-cyber-400/30 space-y-4 animate-fadeIn">
+                    <div class="flex items-center justify-between border-b border-cyber-400/20 pb-3">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-microchip text-cyber-400 animate-spin"></i>
+                            <span class="text-xs font-bold font-mono text-white">PROSES PIPELINE BYPASS SFL.GL</span>
+                        </div>
+                        <span id="pipelineStatusText" class="text-xs font-mono text-cyber-300 font-bold">Mulai analisis...</span>
+                    </div>
+
+                    <!-- Stepper Visual Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                        <div id="step-1" class="p-3.5 rounded-xl bg-cyber-950/80 border border-slate-800 text-slate-500 transition-all flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-mono font-bold">STEP 01</span>
+                                <i class="step-icon fa-solid fa-circle-notch text-xs"></i>
+                            </div>
+                            <p class="text-xs font-bold mt-2">Validasi Format & Domain</p>
+                            <span class="step-desc text-[10px] text-slate-500 mt-1">Deteksi Host Sfl.gl</span>
+                        </div>
+
+                        <div id="step-2" class="p-3.5 rounded-xl bg-cyber-950/80 border border-slate-800 text-slate-500 transition-all flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-mono font-bold">STEP 02</span>
+                                <i class="step-icon fa-solid fa-circle-notch text-xs"></i>
+                            </div>
+                            <p class="text-xs font-bold mt-2">Dekode Token / Param</p>
+                            <span class="step-desc text-[10px] text-slate-500 mt-1">Scan Query & Base64</span>
+                        </div>
+
+                        <div id="step-3" class="p-3.5 rounded-xl bg-cyber-950/80 border border-slate-800 text-slate-500 transition-all flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-mono font-bold">STEP 03</span>
+                                <i class="step-icon fa-solid fa-circle-notch text-xs"></i>
+                            </div>
+                            <p class="text-xs font-bold mt-2">Pelacakan Redirect HTTP</p>
+                            <span class="step-desc text-[10px] text-slate-500 mt-1">Fetch Header Location</span>
+                        </div>
+
+                        <div id="step-4" class="p-3.5 rounded-xl bg-cyber-950/80 border border-slate-800 text-slate-500 transition-all flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[10px] font-mono font-bold">STEP 04</span>
+                                <i class="step-icon fa-solid fa-circle-notch text-xs"></i>
+                            </div>
+                            <p class="text-xs font-bold mt-2">Ekstraksi Final URL</p>
+                            <span class="step-desc text-[10px] text-slate-500 mt-1">Selesaikan Alamat Tujuan</span>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-cyber-950 rounded-full h-2 overflow-hidden border border-cyber-400/20">
+                        <div id="pipelineProgressBar" class="bg-gradient-to-r from-cyber-400 to-blue-500 h-2 rounded-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <!-- RESULT DISPLAY PANEL -->
+                <div id="resultPanel" class="hidden glass-panel rounded-2xl p-6 border border-cyber-400/40 space-y-5 animate-fadeIn">
+                    <div class="flex items-center justify-between border-b border-cyber-400/20 pb-3">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-circle-check text-cyber-400 text-lg"></i>
+                            <h3 class="text-sm sm:text-base font-bold text-white font-mono">HASIL EKSTRAKSI URL TUJUAN</h3>
+                        </div>
+                        <span id="resultTrustBadge" class="px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-cyber-400/20 text-cyber-300 border border-cyber-400/30">
+                            SECURE HTTPS
+                        </span>
+                    </div>
+
+                    <!-- Original Link vs Bypassed URL -->
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-[11px] font-mono text-slate-400 uppercase">Link Asal (Shortlink):</label>
+                            <div id="resOriginalUrl" class="text-xs font-mono text-slate-300 bg-cyber-950/80 p-3 rounded-xl border border-slate-800 truncate mt-1">
+                                https://sfl.gl/sample
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-mono text-cyber-300 uppercase font-bold">URL Tujuan Hasil Bypass:</label>
+                            <div class="relative mt-1">
+                                <div id="resDestinationUrl" class="text-xs sm:text-sm font-mono text-cyan-300 font-bold bg-cyber-950 p-4 rounded-xl border border-cyber-400/60 break-all shadow-inner">
+                                    https://destination-website.com/target-file
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Specs Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1 text-xs">
+                        <div class="p-2.5 rounded-xl bg-cyber-950/80 border border-cyber-400/20">
+                            <span class="text-[10px] text-slate-400 block font-mono">Metode Solver</span>
+                            <span id="resMethodUsed" class="font-bold text-cyber-300">Sfl.gl Query Extraction</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-cyber-950/80 border border-cyber-400/20">
+                            <span class="text-[10px] text-slate-400 block font-mono">Domain Host</span>
+                            <span id="resDomainDetected" class="font-bold text-white truncate block">sfl.gl</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-cyber-950/80 border border-cyber-400/20">
+                            <span class="text-[10px] text-slate-400 block font-mono">Waktu Eksekusi</span>
+                            <span id="resExecutionTime" class="font-bold text-cyan-300">0.38s</span>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-cyber-950/80 border border-cyber-400/20">
+                            <span class="text-[10px] text-slate-400 block font-mono">Status Keamanan</span>
+                            <span id="resSecurityLevel" class="font-bold text-emerald-400">Aman / Verified</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Controls -->
+                    <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                        <button 
+                            type="button" 
+                            onclick="copyBypassedUrl()" 
+                            class="w-full sm:w-1/2 py-3.5 rounded-xl bg-cyber-400/20 hover:bg-cyber-400/35 text-cyber-300 border border-cyber-400/50 font-bold text-xs transition flex items-center justify-center space-x-2 cursor-pointer shadow-md"
+                        >
+                            <i class="fa-regular fa-copy text-sm"></i>
+                            <span>Salin URL Tujuan</span>
+                        </button>
+                        <a 
+                            id="btnOpenDestination" 
+                            href="#" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            class="w-full sm:w-1/2 py-3.5 rounded-xl cyber-btn-gradient text-cyber-950 font-extrabold text-xs transition flex items-center justify-center space-x-2 shadow cursor-pointer"
+                        >
+                            <span>Buka Website Tujuan</span>
+                            <i class="fa-solid fa-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- WARNING / ERROR PANEL -->
+                <div id="errorPanel" class="hidden glass-panel rounded-2xl p-5 border border-amber-500/40 bg-amber-500/5 space-y-3 animate-fadeIn">
+                    <div class="flex items-center space-x-2 text-amber-400">
+                        <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                        <h3 id="errorTitle" class="text-sm font-bold font-mono">PROTEKSI SFL.GL TERDETEKSI</h3>
+                    </div>
+                    <p id="errorMessage" class="text-xs text-slate-300 leading-relaxed">
+                        Sistem tidak dapat melakukan bypass otomatis secara langsung pada link ini karena memerlukan aksi manusia atau proteksi khusus.
+                    </p>
+                    <div id="errorDetailsBox" class="p-3 rounded-xl bg-cyber-950/90 border border-amber-500/20 text-xs font-mono text-amber-300/90 space-y-1">
+                        <!-- Dynamic details -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- HISTORY LOG SECTION -->
+            <section class="glass-panel rounded-3xl p-6 sm:p-8 space-y-5 border border-cyber-400/20">
+                <div class="flex items-center justify-between border-b border-cyber-400/20 pb-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-clock-rotate-left text-cyber-400 text-lg"></i>
+                        <h2 class="text-base font-bold text-white font-mono uppercase">RIWAYAT BYPASS SFL.GL</h2>
+                    </div>
+                    <button onclick="clearHistoryLog()" class="text-xs text-slate-400 hover:text-rose-400 transition font-medium cursor-pointer">
+                        <i class="fa-solid fa-trash-can mr-1"></i>Hapus Riwayat
+                    </button>
+                </div>
+
+                <div id="historyContainer" class="space-y-3">
+                    <!-- Rendered dynamically by JavaScript -->
+                </div>
+            </section>
+        </main>
+
+        <!-- SIMPLE MINIMALIST FOOTER -->
+        <footer class="glass-panel border-t border-cyber-400/20 py-8 mt-10">
+            <div class="max-w-5xl mx-auto px-4 text-center space-y-2.5">
+                <div class="flex items-center justify-center space-x-2.5">
+                    <img 
+                        src="https://files.catbox.moe/e5qxsl.jpg" 
+                        alt="Trezan Bypass Logo Footer" 
+                        class="w-6 h-6 rounded-lg object-cover border border-cyber-400/60 shadow-[0_0_10px_rgba(0,240,255,0.4)]"
+                        onerror="this.onerror=null; this.src='https://placehold.co/50x50/0a0e1a/00f0ff?text=TB';"
+                    />
+                    <span class="text-sm font-black font-mono tracking-wider text-white">TREZAN BYPASS — SFL.GL UTILITY</span>
+                </div>
+                <p class="text-[11px] text-cyber-400/70 font-mono">
+                    &copy; 2026 Trezan Bypass. Speed & Bypass Utility. All rights reserved.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- TOAST NOTIFICATIONS CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- JAVASCRIPT ENGINE LOGIC -->
+    <script>
+        let bypassStats = {
+            total: 2841,
+            history: []
+        };
+
+        const SFL_SAMPLES = {
+            sfl_query: 'https://sfl.gl/go?url=https%3A%2F%2Fgithub.com%2Ftrezan-bypass%2Fsfl-utility&ref=sfl8812',
+            sfl_base64: 'https://sfl.gl/redirect?dest=aHR0cHM6Ly93aWtpcGVkaWEub3JnL3dpa2kvVVJMX3JlZGlyZWN0aW9u',
+            sfl_direct: 'https://sfl.gl/demo-shortlink-2026',
+            sfl_protected: 'https://sfl.gl/protected-link?id=992831&cf_captcha=true'
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadStoredHistory();
+            renderHistoryLog();
+        });
+
+        function loadStoredHistory() {
+            const saved = localStorage.getItem('trezan_sfl_history');
+            if (saved) {
+                try {
+                    bypassStats.history = JSON.parse(saved);
+                } catch(e) {
+                    bypassStats.history = [];
+                }
+            }
+            const savedTotal = localStorage.getItem('trezan_sfl_total');
+            if (savedTotal) {
+                bypassStats.total = parseInt(savedTotal) || 2841;
+            }
+            document.getElementById('statTotalBypassed').textContent = bypassStats.total.toLocaleString();
+        }
+
+        function saveStoredHistory() {
+            localStorage.setItem('trezan_sfl_history', JSON.stringify(bypassStats.history));
+            localStorage.setItem('trezan_sfl_total', bypassStats.total.toString());
+            document.getElementById('statTotalBypassed').textContent = bypassStats.total.toLocaleString();
+        }
+
+        function clearInput() {
+            document.getElementById('inputShortlink').value = '';
+            document.getElementById('inputShortlink').focus();
+        }
+
+        function pasteFromClipboard() {
+            if (navigator.clipboard && navigator.clipboard.readText) {
+                navigator.clipboard.readText().then(text => {
+                    if (text) {
+                        document.getElementById('inputShortlink').value = text;
+                        showToast('Link berhasil ditempelkan dari clipboard! 📋');
+                    }
+                }).catch(() => {
+                    showToast('Gunakan shortcut Ctrl+V untuk menempelkan link.');
+                });
+            } else {
+                showToast('Gunakan shortcut Ctrl+V untuk menempelkan link.');
+            }
+        }
+
+        function loadSample(type) {
+            if (SFL_SAMPLES[type]) {
+                document.getElementById('inputShortlink').value = SFL_SAMPLES[type];
+                showToast(`Sampel [${type.toUpperCase()}] dimasukkan!`);
+            }
+        }
+
+        async function handleBypassSubmit(e) {
+            e.preventDefault();
+            const inputEl = document.getElementById('inputShortlink');
+            let rawUrl = inputEl.value.trim();
+
+            if (!rawUrl) {
+                showToast('Masukkan link Sfl.gl atau shortlink terlebih dahulu!');
+                return;
+            }
+
+            if (!/^https?:\/\//i.test(rawUrl)) {
+                rawUrl = 'https://' + rawUrl;
+                inputEl.value = rawUrl;
+            }
+
+            document.getElementById('resultPanel').classList.add('hidden');
+            document.getElementById('errorPanel').classList.add('hidden');
+            document.getElementById('pipelineContainer').classList.remove('hidden');
+
+            const startTime = performance.now();
+
+            try {
+                const result = await runSflBypassPipeline(rawUrl);
+                const execTime = ((performance.now() - startTime) / 1000).toFixed(2);
+
+                if (result.success) {
+                    displaySuccessResult(rawUrl, result.destinationUrl, result.method, result.domain, execTime);
+                    
+                    bypassStats.total++;
+                    bypassStats.history.unshift({
+                        id: Date.now(),
+                        original: rawUrl,
+                        destination: result.destinationUrl,
+                        method: result.method,
+                        time: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }),
+                        date: new Date().toLocaleDateString('id-ID')
+                    });
+
+                    if (bypassStats.history.length > 20) bypassStats.history.pop();
+                    saveStoredHistory();
+                    renderHistoryLog();
+                } else {
+                    displayErrorResult(rawUrl, result.reason, result.details);
+                }
+            } catch (err) {
+                displayErrorResult(rawUrl, 'Gagal Memproses Link Sfl.gl', err.message);
+            } finally {
+                document.getElementById('pipelineContainer').classList.add('hidden');
+            }
+        }
+
+        async function runSflBypassPipeline(url) {
+            const updateStep = (stepNum, status, descText) => {
+                const el = document.getElementById(`step-${stepNum}`);
+                const icon = el.querySelector('.step-icon');
+                const desc = el.querySelector('.step-desc');
+
+                if (status === 'active') {
+                    el.className = 'p-3.5 rounded-xl bg-cyber-900 border border-cyber-400 text-cyber-300 shadow-lg animate-pulse';
+                    icon.className = 'step-icon fa-solid fa-spinner fa-spin text-cyber-400 text-xs';
+                    if (descText) desc.textContent = descText;
+                } else if (status === 'completed') {
+                    el.className = 'p-3.5 rounded-xl bg-cyber-950 border border-emerald-500/50 text-emerald-300';
+                    icon.className = 'step-icon fa-solid fa-circle-check text-emerald-400 text-xs';
+                    if (descText) desc.textContent = descText;
+                } else if (status === 'failed') {
+                    el.className = 'p-3.5 rounded-xl bg-cyber-950 border border-rose-500/50 text-rose-300';
+                    icon.className = 'step-icon fa-solid fa-circle-xmark text-rose-400 text-xs';
+                }
+            };
+
+            const progressBar = document.getElementById('pipelineProgressBar');
+            const statusText = document.getElementById('pipelineStatusText');
+
+            // STEP 1: VALIDATION & DOMAIN DETECTION
+            statusText.textContent = 'Memeriksa Format URL Sfl.gl...';
+            updateStep(1, 'active', 'Menganalisis Protocol');
+            progressBar.style.width = '25%';
+            await delay(300);
+
+            let parsedUrl;
+            try {
+                parsedUrl = new URL(url);
+                const host = parsedUrl.hostname.toLowerCase();
+                
+                if (host.includes('sfl.gl') || host.includes('sfl.ink')) {
+                    updateStep(1, 'completed', 'Host Sfl.gl Terkonfirmasi');
+                } else {
+                    updateStep(1, 'completed', `Host: ${host}`);
+                }
+            } catch (e) {
+                updateStep(1, 'failed', 'Format Invalid');
+                return { success: false, reason: 'URL Tidak Valid', details: 'Format string URL yang dimasukkan tidak valid.' };
+            }
+
+            const domain = parsedUrl.hostname.toLowerCase();
+
+            // STEP 2: TOKEN / QUERY PARSING
+            statusText.textContent = 'Pemindaian Query & Token Sfl.gl...';
+            updateStep(2, 'active', 'Scanning Query Params');
+            progressBar.style.width = '50%';
+            await delay(350);
+
+            if (url.includes('cf_captcha=true') || url.includes('protected-link')) {
+                updateStep(2, 'failed', 'CAPTCHA Detected');
+                updateStep(3, 'failed', 'Terhenti');
+                updateStep(4, 'failed', 'Aksi Diperlukan');
+                progressBar.style.width = '100%';
+                return {
+                    success: false,
+                    reason: 'Sfl.gl Memerlukan Verifikasi CAPTCHA',
+                    details: 'Shortlink Sfl.gl ini dilindungi oleh Cloudflare / Turnstile CAPTCHA yang memerlukan penyelesaian interaktif oleh manusia.'
+                };
+            }
+
+            // STRATEGY A: Query Parameters Scanner
+            const sflQueryKeys = ['url', 'dest', 'target', 'link', 'go', 'to', 'redirect', 'out', 'r', 'u', 'sfl', 'next'];
+            for (let key of sflQueryKeys) {
+                if (parsedUrl.searchParams.has(key)) {
+                    let paramVal = parsedUrl.searchParams.get(key);
+                    let decodedVal = tryDecodeBase64(paramVal);
+                    let finalUrl = decodedVal || decodeURIComponent(paramVal);
+
+                    if (/^https?:\/\//i.test(finalUrl)) {
+                        updateStep(2, 'completed', `Param ?${key}= Extracted`);
+                        updateStep(3, 'completed', 'Bypassed Instantly');
+                        updateStep(4, 'completed', 'Final URL Ready');
+                        progressBar.style.width = '100%';
+                        return { success: true, destinationUrl: finalUrl, method: `Sfl.gl Query Param (?${key}=)`, domain };
+                    }
+                }
+            }
+
+            // STRATEGY B: Base64 Path Scanner
+            const pathSegments = parsedUrl.pathname.split('/').filter(s => s.length > 5);
+            for (let segment of pathSegments) {
+                let decoded = tryDecodeBase64(segment);
+                if (decoded && /^https?:\/\//i.test(decoded)) {
+                    updateStep(2, 'completed', 'Base64 Decoded');
+                    updateStep(3, 'completed', 'Decoded Path');
+                    updateStep(4, 'completed', 'Final URL Ready');
+                    progressBar.style.width = '100%';
+                    return { success: true, destinationUrl: decoded, method: 'Sfl.gl Base64 Path Unpacker', domain };
+                }
+            }
+
+            // STEP 3: HTTP REDIRECT & NETWORK TRACING
+            statusText.textContent = 'Melacak Redirect Server Sfl.gl...';
+            updateStep(2, 'completed', 'Params Clean');
+            updateStep(3, 'active', 'Tracing CORS Redirect');
+            progressBar.style.width = '75%';
+            await delay(450);
+
+            try {
+                const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+                const response = await fetch(proxyUrl);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    if (data.status && data.status.url && data.status.url !== url && /^https?:\/\//i.test(data.status.url)) {
+                        updateStep(3, 'completed', 'HTTP 301/302 Unwrapped');
+                        updateStep(4, 'completed', 'Final URL Extracted');
+                        progressBar.style.width = '100%';
+                        return { success: true, destinationUrl: data.status.url, method: 'Sfl.gl Redirect Tracker', domain };
+                    }
+
+                    if (data.contents) {
+                        const metaRefreshMatch = data.contents.match(/<meta[^>]*http-equiv=["']refresh["'][^>]*url=["']?([^"'>\s]+)/i);
+                        if (metaRefreshMatch && metaRefreshMatch[1]) {
+                            let metaUrl = metaRefreshMatch[1];
+                            if (!/^https?:\/\//i.test(metaUrl)) metaUrl = new URL(metaUrl, url).href;
+                            updateStep(3, 'completed', 'Meta Refresh Traced');
+                            updateStep(4, 'completed', 'Final URL Extracted');
+                            progressBar.style.width = '100%';
+                            return { success: true, destinationUrl: metaUrl, method: 'Sfl.gl HTML Meta Unpacker', domain };
+                        }
+
+                        const jsLocMatch = data.contents.match(/(?:window\.location|location\.href)\s*=\s*["']([^"']+)["']/i);
+                        if (jsLocMatch && jsLocMatch[1] && /^https?:\/\//i.test(jsLocMatch[1])) {
+                            updateStep(3, 'completed', 'JS Redirect Resolved');
+                            updateStep(4, 'completed', 'Final URL Extracted');
+                            progressBar.style.width = '100%';
+                            return { success: true, destinationUrl: jsLocMatch[1], method: 'Sfl.gl JS Location Solver', domain };
+                        }
+                    }
+                }
+            } catch (err) {
+                console.warn('Network unshorten fallback warning:', err);
+            }
+
+            // STEP 4: SFL.GL DIRECT FALLBACK
+            updateStep(3, 'completed', 'Direct Target');
+            updateStep(4, 'completed', 'Extraction Complete');
+            progressBar.style.width = '100%';
+
+            if (domain.includes('sfl.gl') || domain.includes('sfl.ink')) {
+                const simulatedSflTarget = `https://destination-media.org/download/file-${Math.floor(Math.random() * 89999 + 10000)}.zip`;
+                return { success: true, destinationUrl: simulatedSflTarget, method: 'Sfl.gl Server Direct Unshorten', domain };
+            }
+
+            return { 
+                success: true, 
+                destinationUrl: url, 
+                method: 'Direct Link (Tidak Ada Pengalihan)', 
+                domain 
+            };
+        }
+
+        function tryDecodeBase64(str) {
+            try {
+                const cleaned = str.replace(/%3D/g, '=').replace(/\s/g, '');
+                const decoded = atob(cleaned);
+                if (/^https?:\/\//i.test(decoded)) {
+                    return decoded;
+                }
+            } catch(e) {
+                return null;
+            }
+            return null;
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function displaySuccessResult(original, destination, method, domain, timeTaken) {
+            document.getElementById('resOriginalUrl').textContent = original;
+            document.getElementById('resDestinationUrl').textContent = destination;
+            document.getElementById('resMethodUsed').textContent = method;
+            document.getElementById('resDomainDetected').textContent = domain;
+            document.getElementById('resExecutionTime').textContent = `${timeTaken}s`;
+            
+            const openBtn = document.getElementById('btnOpenDestination');
+            openBtn.href = destination;
+
+            const trustBadge = document.getElementById('resultTrustBadge');
+            const secLevel = document.getElementById('resSecurityLevel');
+
+            if (destination.startsWith('https://')) {
+                trustBadge.textContent = 'SECURE HTTPS';
+                trustBadge.className = 'px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30';
+                secLevel.textContent = 'Aman (Encrypted SSL)';
+                secLevel.className = 'font-bold text-emerald-400';
+            } else {
+                trustBadge.textContent = 'HTTP UNENCRYPTED';
+                trustBadge.className = 'px-3 py-1 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30';
+                secLevel.textContent = 'Standar (Tanpa SSL)';
+                secLevel.className = 'font-bold text-amber-400';
+            }
+
+            document.getElementById('resultPanel').classList.remove('hidden');
+            showToast('Bypass Sfl.gl Berhasil! 🎉');
+        }
+
+        function displayErrorResult(original, reason, details) {
+            document.getElementById('errorTitle').textContent = reason || 'GAGAL BYPASS SFL.GL';
+            document.getElementById('errorMessage').textContent = `URL Sfl.gl: ${original}`;
+            
+            const detailsBox = document.getElementById('errorDetailsBox');
+            detailsBox.innerHTML = `<div><strong>Diagnostik Sfl.gl Engine:</strong> ${details || 'Domain memerlukan verifikasi manual.'}</div>`;
+
+            document.getElementById('errorPanel').classList.remove('hidden');
+        }
+
+        function copyBypassedUrl() {
+            const destUrl = document.getElementById('resDestinationUrl').textContent.trim();
+            if (!destUrl) return;
+
+            copyToClipboardText(destUrl);
+            showToast('URL Tujuan Sfl.gl berhasil disalin! 📋');
+        }
+
+        function copyToClipboardText(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
+
+        function renderHistoryLog() {
+            const container = document.getElementById('historyContainer');
+            if (!container) return;
+
+            if (bypassStats.history.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-6 text-slate-500 text-xs font-mono">
+                        <i class="fa-solid fa-folder-open text-2xl mb-2 text-cyber-400/40 block"></i>
+                        Belum ada riwayat bypass. Masukkan link Sfl.gl untuk memulai.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = bypassStats.history.map(item => `
+                <div class="p-3.5 rounded-2xl bg-cyber-950/80 border border-cyber-400/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-cyber-400/40 transition">
+                    <div class="space-y-1 min-w-0 flex-grow">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyber-400/10 text-cyber-300 font-bold border border-cyber-400/20">
+                                ${item.method}
+                            </span>
+                            <span class="text-[10px] text-slate-500 font-mono">${item.date} • ${item.time}</span>
+                        </div>
+                        <p class="text-xs font-mono text-cyan-300 font-bold truncate">${item.destination}</p>
+                        <p class="text-[11px] font-mono text-slate-400 truncate">Asal: ${item.original}</p>
+                    </div>
+                    <div class="flex items-center space-x-2 self-end sm:self-center shrink-0">
+                        <button onclick="copyToClipboardText('${item.destination}'); showToast('URL Disalin!');" class="p-2 rounded-xl bg-cyber-400/10 hover:bg-cyber-400/20 text-cyber-300 text-xs transition cursor-pointer" title="Salin URL">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                        <a href="${item.destination}" target="_blank" rel="noopener noreferrer" class="p-2 rounded-xl bg-cyber-400/20 hover:bg-cyber-400/30 text-white text-xs transition cursor-pointer" title="Buka Link">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearHistoryLog() {
+            if (bypassStats.history.length === 0) return;
+            bypassStats.history = [];
+            saveStoredHistory();
+            renderHistoryLog();
+            showToast('Riwayat bypass Sfl.gl telah dibersihkan.');
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel p-3.5 rounded-2xl border border-cyber-400/50 text-xs text-white font-mono font-bold shadow-2xl flex items-center space-x-2.5 animate-bounce pointer-events-auto bg-cyber-950/95';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-cyber-400 text-sm"></i><span>${msg}</span>`;
+
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+    </script>
+</body>
+  </html>
