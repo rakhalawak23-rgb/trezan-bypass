@@ -1,0 +1,20 @@
+{
+  "name": "trezan-bypass-api",
+  "version": "1.0.0",
+  "description": "Backend API untuk Trezan Bypass Serverless Function di Vercel",
+  "main": "bypass.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "vercel",
+    "serverless",
+    "url-unshortener",
+    "link-bypass"
+  ],
+  "author": "Trezan",
+  "license": "MIT",
+  "dependencies": {}
+}
